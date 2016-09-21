@@ -5,11 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
 
 import fu.mr.expressmylove.R;
 
@@ -19,7 +15,7 @@ public class SplashActivity extends AppCompatActivity {
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            enterHome();
+            enterSelect();
         }
     };
 
@@ -39,10 +35,10 @@ public class SplashActivity extends AppCompatActivity {
 
 
     /***
-     * 进入主页面
+     * 进入登陆或注册界面
      */
-    private void enterHome() {
-        Intent intent = new Intent(this, HomeActivity.class);
+    private void enterSelect() {
+        Intent intent = new Intent(this, SelectActivity.class);
         startActivity(intent);
         finish();
     }

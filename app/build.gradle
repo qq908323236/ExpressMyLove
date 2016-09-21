@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "fu.mr.expressmylove"
-        minSdkVersion 18
+        minSdkVersion 19
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
@@ -19,10 +19,18 @@ android {
     }
 }
 
+repositories {
+    flatDir {
+        dirs 'libs'    //放arr的目录
+    }
+}
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
+    compile(name:'SMSSDK-2.1.1', ext: 'aar')
     compile 'com.android.support:appcompat-v7:23.4.0'
     compile 'com.android.support:support-v4:23.4.0'
     compile 'com.android.support:design:23.4.0'
+    compile files('libs/MobCommons-2016.0714.1402.jar')
 }
