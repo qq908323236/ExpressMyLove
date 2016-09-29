@@ -12,13 +12,6 @@ import fu.mr.expressmylove.R;
 public class SplashActivity extends AppCompatActivity {
 
 
-    private Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            enterSelect();
-        }
-    };
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,9 +26,16 @@ public class SplashActivity extends AppCompatActivity {
         }.start();
     }
 
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            enterSelect();
+        }
+    };
+
 
     /***
-     * 进入登陆或注册界面
+     * 进入Select界面
      */
     private void enterSelect() {
         Intent intent = new Intent(this, SelectActivity.class);

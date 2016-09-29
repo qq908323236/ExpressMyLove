@@ -26,11 +26,15 @@ repositories {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
-    compile(name:'SMSSDK-2.1.1', ext: 'aar')
+    compile(name: 'SMSSDK-2.1.1', ext: 'aar')   //短信验证
     compile 'com.android.support:appcompat-v7:23.4.0'
     compile 'com.android.support:support-v4:23.4.0'
     compile 'com.android.support:design:23.4.0'
     compile files('libs/MobCommons-2016.0714.1402.jar')
+    compile 'junit:junit:4.12'
+    compile project(':selectordialog')  //dialog集合
+    compile 'org.xutils:xutils:3.3.36'
+    compile project(':photogallery')    //调用相机，剪裁
 }

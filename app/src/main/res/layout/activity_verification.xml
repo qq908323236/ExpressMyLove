@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_verification"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="fu.mr.expressmylove.activity.VerificationActivity">
+
+    <RelativeLayout
+        android:id="@+id/rl_title"
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/title_margin_letf"
+            android:src="@mipmap/back1" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="验证"
+            android:textSize="18sp" />
+
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:scaleType="fitXY"
+            android:src="@mipmap/line" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rl_title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:text="请输入验证码"
+        android:textSize="20sp" />
+
+    <RelativeLayout
+        android:id="@+id/rl_input"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/tv_1"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginTop="20dp">
+
+        <EditText
+            android:id="@+id/et_verificationCode"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#22c6c6c6"
+            android:hint="验证码"
+            android:inputType="number"
+            android:lines="1"
+            android:maxLength="4"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/iv_delete"
+            android:layout_width="30dp"
+            android:layout_height="50dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:paddingBottom="17dp"
+            android:paddingLeft="7dp"
+            android:paddingRight="7dp"
+            android:paddingTop="17dp"
+            android:src="@mipmap/delete" />
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/btn_submit"
+        android:layout_width="0dp"
+        android:layout_height="35dp"
+        android:layout_alignLeft="@id/rl_input"
+        android:layout_alignRight="@id/rl_input"
+        android:layout_below="@id/rl_input"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/svc_button_selector"
+        android:enabled="false"
+        android:text="确定"
+        android:textColor="@android:color/white" />
+
+    <Button
+        android:id="@+id/btn_sendVoiceVerifyCode"
+        android:layout_width="0dp"
+        android:layout_height="35dp"
+        android:layout_alignLeft="@id/rl_input"
+        android:layout_alignRight="@id/rl_input"
+        android:layout_below="@id/btn_submit"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/svc_button_selector"
+        android:enabled="false"
+        android:text="已发送30秒"
+        android:textColor="@android:color/white" />
+
+</RelativeLayout>

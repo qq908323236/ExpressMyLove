@@ -6,7 +6,6 @@
     tools:context="fu.mr.expressmylove.activity.SelectActivity">
 
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_gravity="bottom"

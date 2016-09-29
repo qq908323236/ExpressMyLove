@@ -43,6 +43,16 @@
             android:layout_centerHorizontal="true"
             android:scaleType="fitXY"
             android:src="@mipmap/line" />
+
+        <!--这个也可弄成线-->
+        <!--<TextView-->
+        <!--android:id="@+id/dialog_normal_line"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="0.5dp"-->
+        <!--android:layout_marginLeft="30dp"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:background="@color/gray"/>-->
+
     </RelativeLayout>
 
 
@@ -56,32 +66,49 @@
         android:text="请输入您的手机号码"
         android:textSize="20sp" />
 
-    <TextView
-        android:id="@+id/tv_2"
+    <RelativeLayout
+        android:id="@+id/rl_tv2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/ll_input"
         android:layout_below="@id/tv_1"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"
-        android:text="我们不会公开您的手机号码。\n注册即表明您同意我们的" />
+        android:layout_marginTop="40dp">
+
+        <TextView
+            android:id="@+id/tv_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="我们不会公开您的手机号码。\n注册即代表您同意我们的" />
+
+        <TextView
+            android:id="@+id/tv_agreement"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorAccent"
+            android:layout_alignBottom="@id/tv_2"
+            android:layout_marginLeft="150dp"
+            android:text="《服务协议》"/>
+
+    </RelativeLayout>
+
 
     <LinearLayout
         android:id="@+id/ll_input"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:layout_below="@id/rl_tv2"
+        android:layout_centerHorizontal="true"
         android:layout_marginRight="80dp"
         android:layout_marginTop="50dp"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/tv_2">
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="50dp"
             android:layout_height="match_parent"
-            android:gravity="center"
-            android:textSize="18sp"
             android:background="#228b8b8b"
-            android:text="+86"/>
+            android:gravity="center"
+            android:text="+86"
+            android:textSize="16sp" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -92,21 +119,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="#22c6c6c6"
-                android:textSize="18sp"
+                android:hint="请输入手机号"
                 android:inputType="phone"
                 android:lines="1"
                 android:maxLength="11"
-                android:hint="请输入手机号" />
+                android:textSize="16sp" />
 
             <ImageView
                 android:id="@+id/iv_delete"
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                android:background="#22c6c6c6"
-                android:visibility="invisible"
+                android:layout_width="30dp"
+                android:layout_height="50dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:src="@mipmap/delete"/>
+                android:paddingBottom="17dp"
+                android:paddingLeft="7dp"
+                android:paddingRight="7dp"
+                android:paddingTop="17dp"
+                android:src="@mipmap/delete" />
 
         </RelativeLayout>
 
@@ -117,15 +146,15 @@
         android:id="@+id/btn_sendVerificationCode"
         android:layout_width="0dp"
         android:layout_height="35dp"
+        android:layout_alignLeft="@id/ll_input"
+        android:layout_alignRight="@id/ll_input"
+        android:layout_below="@id/ll_input"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
-        android:layout_below="@id/ll_input"
-        android:layout_alignRight="@id/ll_input"
-        android:layout_alignLeft="@id/ll_input"
+        android:background="@drawable/svc_button_selector"
+        android:enabled="false"
         android:text="发送验证码"
-        android:textColor="@android:color/white"
-        android:background="@drawable/button_available"/>
-
+        android:textColor="@android:color/white" />
 
 
 </RelativeLayout>
