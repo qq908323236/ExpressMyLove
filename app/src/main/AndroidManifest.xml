@@ -47,9 +47,19 @@
         <!-- 编辑资料界面 -->
         <activity android:name=".activity.InputInfoActivity" />
         <!-- 主页 -->
-        <activity android:name=".activity.HomeActivity" />
-        <!--浏览服务协议之类的-->
-        <activity android:name=".activity.WebActivity"/>
+        <activity android:name=".activity.HomeActivity">
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        </activity>
+        <!-- 浏览服务协议之类的 -->
+        <activity android:name=".activity.WebActivity" />
+        <!-- 忘记密码 -->
+        <activity android:name=".activity.ForgetPasswordActivity" />
+        <!--忘记密码后，验证成功修改密码-->
+        <activity android:name=".activity.SetUserPassword"></activity>
     </application>
 
 </manifest>

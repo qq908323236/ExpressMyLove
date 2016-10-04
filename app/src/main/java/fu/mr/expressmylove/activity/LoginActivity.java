@@ -3,6 +3,7 @@ package fu.mr.expressmylove.activity;
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
+import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -28,6 +29,8 @@ import com.wevey.selector.dialog.NormalAlertDialog;
 import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
+
+import java.util.Map;
 
 import fu.mr.expressmylove.R;
 import fu.mr.expressmylove.application.MyApplication;
@@ -62,6 +65,8 @@ public class LoginActivity extends Activity implements View.OnClickListener, Tex
     private String phone;
 
     private Callback.Cancelable cancelable;
+
+    private MyApplication application;
 
     /**
      * 动画要用的参数
@@ -127,7 +132,8 @@ public class LoginActivity extends Activity implements View.OnClickListener, Tex
     }
 
     private void initData() {
-        MyApplication._instance.addActivity(this);
+        application = (MyApplication) getApplication();
+        application.addActivity(this);
     }
 
     @Override
@@ -160,7 +166,7 @@ public class LoginActivity extends Activity implements View.OnClickListener, Tex
                 et_password.setText("");
                 break;
             case R.id.tv_forgetPassword:
-                Toast.makeText(this, "进入忘记密码的界面", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(this,ForgetPasswordActivity.class));
                 break;
             case R.id.btn_logindo:
                 phone = et_phone.getText().toString().trim();
@@ -195,9 +201,10 @@ public class LoginActivity extends Activity implements View.OnClickListener, Tex
                     Toast.makeText(LoginActivity.this, "密码错误，请重新输入", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(LoginActivity.this, "成功", Toast.LENGTH_SHORT).show();
-                    System.out.println("uid:" + result);
-                    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-                    MyApplication._instance.deleteActivityList();   //把前面的activity全finsh掉
+                    Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                    intent.putExtra("uid",result);
+                    startActivity(intent);
+                    application.deleteActivityList();   //把前面的activity全finsh掉
                 }
             }
 
@@ -218,6 +225,9 @@ public class LoginActivity extends Activity implements View.OnClickListener, Tex
         });
     }
 
+    /**
+     * 显示该手机号未注册的dialog
+     */
     private void showNoRegisterDialog(){
         dialog = new NormalAlertDialog.Builder(LoginActivity.this)
                 .setHeight(0.23f)  //屏幕高度*0.23

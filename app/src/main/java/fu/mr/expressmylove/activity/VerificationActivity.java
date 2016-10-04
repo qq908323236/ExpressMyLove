@@ -14,6 +14,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.wevey.selector.dialog.DialogOnClickListener;
+import com.wevey.selector.dialog.NormalAlertDialog;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -21,8 +24,9 @@ import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
 import fu.mr.expressmylove.R;
 import fu.mr.expressmylove.application.MyApplication;
+import fu.mr.expressmylove.utils.Constans;
 
-public class VerificationActivity extends AppCompatActivity implements View.OnClickListener{
+public class VerificationActivity extends AppCompatActivity implements View.OnClickListener {
 
     private final int VERIFICATION_CODE = 1;
     private final int TIMER_CODE = 2;
@@ -38,6 +42,8 @@ public class VerificationActivity extends AppCompatActivity implements View.OnCl
     private EventHandler eventHandler;
 
     private String phone;
+    private String what;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +53,7 @@ public class VerificationActivity extends AppCompatActivity implements View.OnCl
         initData();
     }
 
-    private Handler handler = new Handler(){
+    private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
@@ -59,10 +65,19 @@ public class VerificationActivity extends AppCompatActivity implements View.OnCl
                         //回调完成
                         if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {
                             //提交验证码成功
-                            Toast.makeText(VerificationActivity.this, "验证码正确", Toast.LENGTH_SHORT).show();
-                            //进入填写昵称,密码和头像的界面
-                            Intent intent = new Intent(VerificationActivity.this, InputInfoActivity.class);
-                            intent.putExtra("phone", phone);
+                            Toast.makeText(VerificationActivity.this, "验证成功", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent();
+                            switch (what) {
+                                case Constans.WHAT_REGISTER:   //注册界面来的
+                                    //进入填写昵称,密码和头像的界面
+                                    intent.setClass(VerificationActivity.this, InputInfoActivity.class);
+                                    intent.putExtra("phone", phone);
+                                    break;
+                                case Constans.WHAT_FORGETPASSWORD:  //忘记密码界面来的
+                                    intent.setClass(VerificationActivity.this, SetUserPassword.class);
+                                    intent.putExtra("phone", phone);
+                                    break;
+                            }
                             startActivity(intent);
                             finish();
                         }
@@ -71,7 +86,7 @@ public class VerificationActivity extends AppCompatActivity implements View.OnCl
                         try {
                             JSONObject jsonObject = new JSONObject(message);
                             String status = jsonObject.getString("status");
-                            if (status.equals("468")){
+                            if (status.equals("468")) {
                                 Toast.makeText(VerificationActivity.this, "验证码错误", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
@@ -82,13 +97,13 @@ public class VerificationActivity extends AppCompatActivity implements View.OnCl
                     break;
                 case TIMER_CODE:
                     SURPLUS_SECOND--;
-                    if (SURPLUS_SECOND == 0){
+                    if (SURPLUS_SECOND == 0) {
                         btn_sendVoiceVerifyCode.setText("发送语音验证码");
                         btn_sendVoiceVerifyCode.setEnabled(true);
                         btn_sendVoiceVerifyCode.setClickable(true);
-                    }else{
+                    } else {
                         btn_sendVoiceVerifyCode.setText("已发送" + SURPLUS_SECOND + "秒");
-                        handler.sendEmptyMessageDelayed(TIMER_CODE,1000);
+                        handler.sendEmptyMessageDelayed(TIMER_CODE, 1000);
                     }
                     break;
             }
@@ -140,9 +155,10 @@ public class VerificationActivity extends AppCompatActivity implements View.OnCl
 
     private void initData() {
         phone = getIntent().getStringExtra("phone");
-
+        //通过what判断为什么需要验证
+        what = getIntent().getStringExtra("what");
         //初始化短信验证SDK
-        SMSSDK.initSDK(this, "17341c343c280", "c672c7cb35bc4c67da7fa65a50fa8cb7");
+        SMSSDK.initSDK(this, Constans.APP_KEY, Constans.APP_SERCRET);
 
         //回调监听
         eventHandler = new EventHandler() {
@@ -161,16 +177,16 @@ public class VerificationActivity extends AppCompatActivity implements View.OnCl
         SMSSDK.registerEventHandler(eventHandler);
 
         //发送验证码
-//        SMSSDK.getVerificationCode("86", phone);   //方便测试，暂时先不发,到时后要解开
+        SMSSDK.getVerificationCode("86", phone);   //方便测试，暂时先不发,到时后要解开
 
         //计时器
-        handler.sendEmptyMessageDelayed(TIMER_CODE,1000);
+        handler.sendEmptyMessageDelayed(TIMER_CODE, 1000);
     }
 
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.iv_back:
                 onBackPressed();
                 break;
@@ -178,19 +194,31 @@ public class VerificationActivity extends AppCompatActivity implements View.OnCl
                 et_verificationCode.setText("");
                 break;
             case R.id.btn_submit:
-//                SMSSDK.submitVerificationCode("86", phone,et_verificationCode.getText().toString().trim());
-                //这4行方便测试，以后要删，还要解开上面这一行
-                Intent intent = new Intent(this, InputInfoActivity.class);
-                intent.putExtra("phone", phone);
-                startActivity(intent);
-                finish();
+                SMSSDK.submitVerificationCode("86", phone, et_verificationCode.getText().toString().trim());
+                //下面这些行，一直到finish行方便测试，以后要删，还要解开上面这一行
+//                Toast.makeText(VerificationActivity.this, "验证成功", Toast.LENGTH_SHORT).show();
+//                Intent intent = new Intent();
+//                switch (what) {
+//                    case Constans.WHAT_REGISTER:   //注册界面来的
+//                        //进入填写昵称,密码和头像的界面
+//                        intent.setClass(VerificationActivity.this, InputInfoActivity.class);
+//                        intent.putExtra("phone", phone);
+//                        break;
+//                    case Constans.WHAT_FORGETPASSWORD:  //忘记密码界面来的
+//                        intent.setClass(VerificationActivity.this, SetUserPassword.class);
+//                        intent.putExtra("phone", phone);
+//                        break;
+//                }
+//                startActivity(intent);
+//                finish();
                 break;
             case R.id.btn_sendVoiceVerifyCode:
-//                SMSSDK.getVoiceVerifyCode("86",phone);
+                SMSSDK.getVoiceVerifyCode("86", phone);
                 Toast.makeText(this, "发送了语音验证码,请注意接听", Toast.LENGTH_SHORT).show();
                 break;
         }
     }
+
 
     @Override
     protected void onDestroy() {

@@ -48,7 +48,7 @@
     <!--android:clickable="true"-->
     <!--android:src="@mipmap/tx" />-->
 
-    <fu.mr.expressmylove.utils.CircleImageView
+    <fu.mr.expressmylove.view.ShapeImageView
         android:id="@+id/civ_avatar"
         android:layout_width="100dp"
         android:layout_height="100dp"
@@ -57,20 +57,8 @@
         android:layout_marginTop="35dp"
         android:clickable="true"
         android:src="@mipmap/tx"
-        app:border_color="@color/white_light"
-        app:border_width="1dp" />
-
-    <!--<fu.mr.expressmylove.view.ShapeImageView-->
-    <!--android:id="@+id/civ_avatar"-->
-    <!--android:layout_width="100dp"-->
-    <!--android:layout_height="100dp"-->
-    <!--android:layout_below="@id/rl_title"-->
-    <!--android:layout_centerHorizontal="true"-->
-    <!--android:layout_marginTop="35dp"-->
-    <!--android:clickable="true"-->
-    <!--android:src="@mipmap/tx"-->
-    <!--app:frame_width="3dp"-->
-    <!--app:shape_mode="circle" />-->
+        app:frame_width="3dp"
+        app:shape_mode="circle" />
 
     <!--<fu.mr.expressmylove.view.CircleImageView-->
     <!--android:id="@+id/civ_avatar"-->
@@ -145,12 +133,12 @@
         android:orientation="horizontal">
 
         <ImageView
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_gravity="center_vertical"
-        android:background="#228b8b8b"
-        android:padding="16dp"
-        android:src="@mipmap/password" />
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center_vertical"
+            android:background="#228b8b8b"
+            android:padding="16dp"
+            android:src="@mipmap/password" />
 
         <RelativeLayout
             android:layout_width="match_parent"

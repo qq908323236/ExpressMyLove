@@ -15,6 +15,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.wevey.selector.dialog.DialogOnClickListener;
+import com.wevey.selector.dialog.NormalAlertDialog;
 import com.wq.photo.widget.PickConfig;
 import com.yalantis.ucrop.UCrop;
 
@@ -24,18 +26,19 @@ import org.xutils.x;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Map;
 
 import fu.mr.expressmylove.R;
 import fu.mr.expressmylove.application.MyApplication;
-import fu.mr.expressmylove.utils.CircleImageView;
 import fu.mr.expressmylove.utils.Constans;
+import fu.mr.expressmylove.view.ShapeImageView;
 
 
 public class InputInfoActivity extends AppCompatActivity implements View.OnClickListener, TextWatcher {
 
     private boolean pwdIsShow = false;    //密码是否显示 false不显示，true显示
 
-    private CircleImageView civ_avatar;
+    private ShapeImageView civ_avatar;
     private ImageView iv_back;
     private EditText et_nickname;
     private ImageView iv_delete1;
@@ -44,8 +47,14 @@ public class InputInfoActivity extends AppCompatActivity implements View.OnClick
     private Button btn_regeisterSuccess;
     private ImageView iv_lookpassword;
 
+    private NormalAlertDialog dialog;
+
+    private boolean isGiveUp = false;
+
     private String phone;
     private String avatarPath;
+    private MyApplication application;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +67,7 @@ public class InputInfoActivity extends AppCompatActivity implements View.OnClick
     private void initUI() {
         setContentView(R.layout.activity_input_info);
         iv_back = (ImageView) findViewById(R.id.iv_back);
-        civ_avatar = (CircleImageView) findViewById(R.id.civ_avatar);
+        civ_avatar = (ShapeImageView) findViewById(R.id.civ_avatar);
         et_nickname = (EditText) findViewById(R.id.et_nickname);
         iv_delete1 = (ImageView) findViewById(R.id.iv_delete1);
         et_password = (EditText) findViewById(R.id.et_password);
@@ -85,7 +94,8 @@ public class InputInfoActivity extends AppCompatActivity implements View.OnClick
 
     private void initData() {
         phone = getIntent().getStringExtra("phone");
-        MyApplication._instance.addActivity(this);
+        application = (MyApplication) getApplication();
+        application.addActivity(this);
     }
 
     @Override
@@ -164,9 +174,10 @@ public class InputInfoActivity extends AppCompatActivity implements View.OnClick
                     Toast.makeText(InputInfoActivity.this, "此昵称已经有人用了", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(InputInfoActivity.this, "成功", Toast.LENGTH_SHORT).show();
-                    System.out.println("uid:" + result);
-                    startActivity(new Intent(InputInfoActivity.this, HomeActivity.class));
-                    MyApplication._instance.deleteActivityList();   //把前面的activity全finsh掉
+                    Intent intent = new Intent(InputInfoActivity.this, HomeActivity.class);
+                    intent.putExtra("uid",result);
+                    startActivity(intent);
+                    application.deleteActivityList();   //把前面的activity全finsh掉
                 }
             }
 
@@ -195,10 +206,41 @@ public class InputInfoActivity extends AppCompatActivity implements View.OnClick
             ArrayList<String> paths = data.getStringArrayListExtra("data");
             //paths.get(0) 就是单选的的图片的路径
             avatarPath = paths.get(0);
-//            System.out.println("paths:" + paths.get(0));
-//            x.image().bind(civ_avatar, paths.get(0));
+            x.image().bind(civ_avatar, paths.get(0));
 
         }
+    }
+
+    /**
+     * 显示是否放弃注册的dialog
+     */
+    private void showIsGiveUpDialog() {
+        dialog = new NormalAlertDialog.Builder(InputInfoActivity.this)
+                .setHeight(0.23f)  //屏幕高度*0.23
+                .setWidth(0.65f)  //屏幕宽度*0.65
+                .setTitleVisible(false)
+                .setContentText("你确定要放弃注册吗？")
+                .setContentTextSize(16)
+                .setContentTextColor(R.color.black_light)
+                .setLeftButtonText("取消")
+                .setLeftButtonTextColor(R.color.black_light)
+                .setRightButtonText("放弃")
+                .setRightButtonTextColor(R.color.black_light)
+                .setOnclickListener(new DialogOnClickListener() {
+                    @Override
+                    public void clickLeftButton(View view) {
+                        dialog.dismiss();
+                    }
+
+                    @Override
+                    public void clickRightButton(View view) {
+                        isGiveUp = true;
+                        dialog.dismiss();
+                        onBackPressed();
+                    }
+                })
+                .build();
+        dialog.show();
     }
 
 
@@ -233,5 +275,15 @@ public class InputInfoActivity extends AppCompatActivity implements View.OnClick
 
         btn_regeisterSuccess.setClickable(et_nickname.getText().length() >= 1
                 && et_password.getText().length() >= 6);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (isGiveUp == true) {
+            super.onBackPressed();
+        } else {
+            showIsGiveUpDialog();
+        }
+
     }
 }

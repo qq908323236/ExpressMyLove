@@ -1,20 +1,17 @@
 package fu.mr.expressmylove.activity;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.text.Editable;
-import android.text.Html;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.wevey.selector.dialog.DialogOnClickListener;
@@ -29,21 +26,21 @@ import fu.mr.expressmylove.application.MyApplication;
 import fu.mr.expressmylove.utils.Constans;
 import fu.mr.expressmylove.view.CustomProgressDialog;
 
-public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
+public class ForgetPasswordActivity extends AppCompatActivity implements View.OnClickListener{
 
     private final int PROGRESSDIALOG_DISMISS_CODE = 2;
 
     private ImageView iv_back;
-    private TextView tv_login;
     private EditText et_phone;
     private ImageView iv_delete;
-    private TextView tv_agreement;
     private Button btn_sendVerificationCode;
+
     private NormalAlertDialog dialog;
+
     private CustomProgressDialog progressDialog;
 
     private Callback.Cancelable cancelable;
-
+    private String phone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +48,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         initUI();
         initListener();
         initData();
-
     }
 
     private Handler handler = new Handler() {
@@ -66,39 +62,31 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         }
     };
 
-
     private void initUI() {
-        setContentView(R.layout.activity_register);
+        setContentView(R.layout.activity_forget_password);
         iv_back = (ImageView) findViewById(R.id.iv_back);
-        tv_login = (TextView) findViewById(R.id.tv_login);
         et_phone = (EditText) findViewById(R.id.et_phone);
         iv_delete = (ImageView) findViewById(R.id.iv_delete);
-        iv_delete.setVisibility(View.INVISIBLE);    //一进来是看不到的
+        iv_delete.setVisibility(View.INVISIBLE);
         btn_sendVerificationCode = (Button) findViewById(R.id.btn_sendVerificationCode);
-        tv_agreement = (TextView) findViewById(R.id.tv_agreement);
-
     }
 
     private void initListener() {
         iv_back.setOnClickListener(this);
-        tv_login.setOnClickListener(this);
         iv_delete.setOnClickListener(this);
         btn_sendVerificationCode.setOnClickListener(this);
-        btn_sendVerificationCode.setClickable(false);     //这个要放在设置监听接口后面，因为设置了监听接口会自动把Clickable置成true
-        tv_agreement.setOnClickListener(this);
+        btn_sendVerificationCode.setClickable(false);
         et_phone.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
             }
 
-            //文字变化时的回调
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
             }
 
-            //文字变化结束后回调
             @Override
             public void afterTextChanged(Editable s) {
                 if (!TextUtils.isEmpty(s)) {
@@ -120,28 +108,19 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
+        switch (v.getId()){
             case R.id.iv_back:
                 onBackPressed();
                 break;
-            case R.id.tv_login:
-                startActivity(new Intent(this, LoginActivity.class));
-                break;
-            case R.id.tv_agreement:
-//                Toast.makeText(this, "跳到web界面", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(this, WebActivity.class);
-                intent.putExtra("what",Constans.WHAT_WEB_SERVICE_AGREEMENT);
-                startActivity(intent);
-                break;
             case R.id.iv_delete:
-                et_phone.setText("");   //清除edittext中的内容
+                et_phone.setText("");
                 break;
             case R.id.btn_sendVerificationCode:
-                String phone = et_phone.getText().toString().trim();
-                if (phone.matches("^1[3-8]\\d{9}$")) {   //匹配是否是手机号
-                    verificationIsRegister(phone);  //验证手机号注册过没有
+                phone = et_phone.getText().toString().trim();
+                if (phone.matches("^1[3-8]\\d{9}$")){
+                    verificationIsRegister(phone);
                 } else {
-                    Toast.makeText(RegisterActivity.this, "请输入正确的手机号", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "请输入正确的手机号", Toast.LENGTH_SHORT).show();
                 }
                 break;
         }
@@ -163,19 +142,19 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             public void onSuccess(String result) {
                 progressDialog.dismiss();
                 if (result.equals("0")) {
-                    // 0就是该手机没有注册过，没有注册过才可以注册
-                    Intent intent = new Intent(RegisterActivity.this,VerificationActivity.class);
-                    intent.putExtra("phone", phone);
-                    intent.putExtra("what", Constans.WHAT_REGISTER);
-                    startActivity(intent);
+                    // 0就是该手机没有注册过,要先注册才能忘记密码
+                    showNoRegisterDialog();
                 } else {
-                    showHadRegisterDialog();
+                    Intent intent = new Intent(ForgetPasswordActivity.this,VerificationActivity.class);
+                    intent.putExtra("phone", phone);
+                    intent.putExtra("what", Constans.WHAT_FORGETPASSWORD);  //通过what判断为什么需要验证
+                    startActivity(intent);
                 }
             }
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-                Toast.makeText(RegisterActivity.this, "连接失败，请检查网络连接", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ForgetPasswordActivity.this, "连接失败，请检查网络连接", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -192,19 +171,19 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     }
 
     /**
-     * 显示已经注册了的dialog
+     * 显示该手机号未注册的dialog
      */
-    private void showHadRegisterDialog() {
-        dialog = new NormalAlertDialog.Builder(RegisterActivity.this)
+    private void showNoRegisterDialog(){
+        dialog = new NormalAlertDialog.Builder(ForgetPasswordActivity.this)
                 .setHeight(0.23f)  //屏幕高度*0.23
                 .setWidth(0.65f)  //屏幕宽度*0.65
                 .setTitleVisible(false)
-                .setContentText("该手机号已经注册过了")
+                .setContentText("该手机号还未注册")
                 .setContentTextSize(16)
                 .setContentTextColor(R.color.black_light)
                 .setLeftButtonText("取消")
                 .setLeftButtonTextColor(R.color.black_light)
-                .setRightButtonText("登陆")
+                .setRightButtonText("去注册")
                 .setRightButtonTextColor(R.color.black_light)
                 .setOnclickListener(new DialogOnClickListener() {
                     @Override
@@ -214,7 +193,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
                     @Override
                     public void clickRightButton(View view) {
-                        startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+                        startActivity(new Intent(ForgetPasswordActivity.this, RegisterActivity.class));
                         dialog.dismiss();
                     }
                 })
@@ -232,5 +211,4 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         progressDialog.setDismissMessage(msg);
         progressDialog.show();
     }
-
 }

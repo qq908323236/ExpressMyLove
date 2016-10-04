@@ -31,7 +31,7 @@ public class SelectActivity extends Activity {
     }
 
     private void initData() {
-        MyApplication._instance.addActivity(this);
+        ((MyApplication) getApplication()).addActivity(this);
     }
 
     public void login(View view){
