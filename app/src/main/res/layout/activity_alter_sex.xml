@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_alter_sex"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/scrollViewbackground"
+    android:orientation="vertical"
+    tools:context="fu.mr.expressmylove.activity.editAccountInfo.AlterSexActivity">
+
+    <RelativeLayout
+        android:id="@+id/rl_title"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/title_margin_letf"
+            android:src="@mipmap/back1" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="性别"
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/line2" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/setting_margin_top"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_alignParentTop="true"
+            android:background="@color/line2" />
+
+        <LinearLayout
+            android:id="@+id/ll_female"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/linear_btn_selector"
+            android:clickable="true"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="@dimen/title_margin_letf"
+                android:padding="8dp"
+                android:src="@mipmap/icon_nv" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:text="女"
+                android:textSize="19sp" />
+
+            <ImageView
+                android:id="@+id/iv_checked1"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="bottom"
+                android:layout_marginRight="5dp"
+                android:padding="7dp"
+                android:src="@mipmap/checked" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginLeft="@dimen/title_margin_letf"
+            android:background="@color/line2" />
+
+        <LinearLayout
+            android:id="@+id/ll_male"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/linear_btn_selector"
+            android:clickable="true"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="@dimen/title_margin_letf"
+                android:padding="10dp"
+                android:src="@mipmap/icon_nan" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:text="男"
+                android:textSize="19sp" />
+
+            <ImageView
+                android:id="@+id/iv_checked2"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="bottom"
+                android:layout_marginRight="5dp"
+                android:padding="7dp"
+                android:src="@mipmap/checked" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_alignParentTop="true"
+            android:background="@color/line2" />
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -28,6 +28,12 @@ public class BbqFragment extends Fragment {
     }
 
     @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        System.out.println("onActivityCreated");
+    }
+
+    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         System.out.println("onCreate");
@@ -44,6 +50,8 @@ public class BbqFragment extends Fragment {
         super.onStop();
         System.out.println("onStop");
     }
+
+
 
     @Override
     public void onPause() {

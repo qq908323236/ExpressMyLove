@@ -21,16 +21,18 @@ import com.wq.photo.widget.PickConfig;
 import com.yalantis.ucrop.UCrop;
 
 import org.xutils.common.Callback;
+import org.xutils.common.util.DensityUtil;
 import org.xutils.http.RequestParams;
+import org.xutils.image.ImageOptions;
 import org.xutils.x;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Map;
 
 import fu.mr.expressmylove.R;
 import fu.mr.expressmylove.application.MyApplication;
 import fu.mr.expressmylove.utils.Constans;
+import fu.mr.expressmylove.utils.Utils;
 import fu.mr.expressmylove.view.ShapeImageView;
 
 
@@ -162,7 +164,7 @@ public class InputInfoActivity extends AppCompatActivity implements View.OnClick
         params.addBodyParameter("phone", phone);
         params.addBodyParameter("nickname", et_nickname.getText().toString().trim());
         params.addBodyParameter("upassword", et_password.getText().toString().trim());
-        if (avatarPath != null){
+        if (avatarPath != null) {
             params.addBodyParameter("avatar", new File(avatarPath));
         }
         x.http().post(params, new Callback.CommonCallback<String>() {
@@ -170,12 +172,12 @@ public class InputInfoActivity extends AppCompatActivity implements View.OnClick
             public void onSuccess(String result) {
                 if (result.equals("0")) {
                     Toast.makeText(InputInfoActivity.this, "失败", Toast.LENGTH_SHORT).show();
-                } else if (result.equals("-1")){
+                } else if (result.equals("-1")) {
                     Toast.makeText(InputInfoActivity.this, "此昵称已经有人用了", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(InputInfoActivity.this, "成功", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(InputInfoActivity.this, HomeActivity.class);
-                    intent.putExtra("uid",result);
+                    intent.putExtra("uid", result);
                     startActivity(intent);
                     application.deleteActivityList();   //把前面的activity全finsh掉
                 }

@@ -15,7 +15,7 @@
     <application
         android:name=".application.MyApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_log2"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -48,18 +48,55 @@
         <activity android:name=".activity.InputInfoActivity" />
         <!-- 主页 -->
         <activity android:name=".activity.HomeActivity">
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
 
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
         <!-- 浏览服务协议之类的 -->
         <activity android:name=".activity.WebActivity" />
         <!-- 忘记密码 -->
         <activity android:name=".activity.ForgetPasswordActivity" />
-        <!--忘记密码后，验证成功修改密码-->
-        <activity android:name=".activity.SetUserPassword"></activity>
+        <!-- 忘记密码后，验证成功修改密码 -->
+        <activity android:name=".activity.SetUserPassword" />
+
+        <!-- QQ登陆需要的 -->
+        <activity
+            android:name="com.tencent.tauth.AuthActivity"
+            android:launchMode="singleTask"
+            android:noHistory="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="tencent1105629001" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.tencent.connect.common.AssistActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <!-- 第三方登陆后的编辑资料界面 -->
+        <activity android:name=".activity.OtherLoginInputInfoActivity" />
+        <!-- 设置界面 -->
+        <activity android:name=".activity.setting.SettingActivity" />
+        <!-- 编辑用户资料界面 -->
+        <activity android:name=".activity.editAccountInfo.EditAccountInfoActivity" />
+        <!-- 修改昵称 -->
+        <activity
+            android:name=".activity.editAccountInfo.AlterNicknameActivity"
+            android:windowSoftInputMode="stateVisible|adjustResize" />
+        <!--修改性别-->
+        <activity android:name=".activity.editAccountInfo.AlterSexActivity" />
+        <!--修改个性签名-->
+        <activity android:name=".activity.editAccountInfo.AlterPersonalizeActivity"
+            android:windowSoftInputMode="stateVisible|adjustResize"/>
     </application>
 
 </manifest>

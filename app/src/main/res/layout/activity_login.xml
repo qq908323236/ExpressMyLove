@@ -194,7 +194,25 @@
             android:text="登陆"
             android:textColor="@android:color/white" />
 
-    </RelativeLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:textSize="10sp"
+            android:textColor="#747474"
+            android:layout_marginBottom="90dp"
+            android:text="第三方登陆"/>
 
+        <ImageView
+            android:id="@+id/iv_qq"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="15dp"
+            android:src="@mipmap/icon_qq"/>
+
+    </RelativeLayout>
 
 </RelativeLayout>

@@ -8,4 +8,14 @@
 
     <color name="colorTabNomar">#33475f</color>
     <color name="colorTabFocus">#FF4081</color>
+
+    <color name="colorDeafult">#33475f</color>
+
+    <color name="line2">#33000000</color>
+
+    <color name="scrollViewbackground">#f7f7f7</color>
+
+    <color name="gray">#99000000</color>
+
+    <color name="grayText">#55000000</color>
 </resources>

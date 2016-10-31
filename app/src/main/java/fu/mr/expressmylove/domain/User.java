@@ -20,7 +20,7 @@ public class User {
 
     private String personalize;  //个性签名
 
-    private int authentication;   //实名认证  0表示未认证，1表示认证
+    private String authentication;   //实名认证  0表示未认证，1表示认证
 
     public String getUid() {
         return uid;
@@ -62,11 +62,11 @@ public class User {
         this.personalize = personalize;
     }
 
-    public int getAuthentication() {
+    public String getAuthentication() {
         return authentication;
     }
 
-    public void setAuthentication(int authentication) {
+    public void setAuthentication(String authentication) {
         this.authentication = authentication;
     }
 

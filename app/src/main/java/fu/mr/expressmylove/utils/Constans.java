@@ -15,13 +15,18 @@ public class Constans {
 
 
     /**
+     * QQ登陆需要的APP_ID
+     */
+    public static final String APP_ID_QQ = "1105629001";
+
+    /**
      * 服务器接口
      */
     //本地服务器接口的基础地址
-//    public static final String URL_BASE = "http://10.5.86.41/expressmylove/";
+    public static final String URL_BASE = "http://10.5.86.41/expressmylove/";
 
     //远程服务器接口基础地址
-    public static final String URL_BASE = "http://123.206.42.197/expressmylove/";
+//    public static final String URL_BASE = "http://123.206.42.197/expressmylove/";
 
     //用户登陆接口
     public static final String URL_LOGIN = URL_BASE + "user/login.php";
@@ -29,14 +34,29 @@ public class Constans {
     //用户注册账号的接口
     public static final String URL_REGISTER = URL_BASE + "user/register.php";
 
+    //获取用户信息的接口
+    public static final String URL_GET_USER_INFO = URL_BASE + "get_user_info.php";
+
     //注册账号时检查手机号是否注册的接口
     public static final String URL_CHECK_PHONE = URL_BASE + "user/check_phone.php";
+
+    //注册账号时检测此QQ是否已经注册过的接口
+    public static final String URL_CHECK_OPEN_ID = URL_BASE + "user/check_open_id.php";
 
     //忘记密码后验证成功设置密码的接口
     public static final String URL_SET_PASSWORD = URL_BASE + "user/set_password.php";
 
     //服务协议的网址
     public static final String URL_SERVICE_AGREEMENT = URL_BASE + "fwxy.html";
+
+    //更新用户信息的接口
+    public static final String URL_UPDATE_USER_INFO = URL_BASE + "user/update_user_info.php";
+    //更新用户接口的what参数的取值:
+    public static final String UPDATE_USER_INFO_WHAT_AVATAR = "1";  //修改头像
+    public static final String UPDATE_USER_INFO_WHAT_NICKNAME = "2";  //修改昵称
+    public static final String UPDATE_USER_INFO_WHAT_SEX = "3";  //修改性别
+    public static final String UPDATE_USER_INFO_WHAT_PERSONALIZE = "4";  //修改个性签名
+
 
 
     /**

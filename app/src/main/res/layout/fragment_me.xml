@@ -1,25 +1,20 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="fu.mr.expressmylove.fragment.MeFragment">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <RelativeLayout
             android:id="@+id/rl_title"
             android:layout_width="match_parent"
             android:layout_height="60dp">
 
-            <ImageView
-                android:id="@+id/iv_back"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:padding="20dp"
-                android:layout_centerVertical="true"
-                android:src="@mipmap/close" />
 
             <TextView
                 android:id="@+id/tv_title"
@@ -29,17 +24,26 @@
                 android:text="个人中心"
                 android:textSize="18sp" />
 
-
-            <!--这个也可弄成线-->
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_alignParentBottom="true"
-                android:background="@color/gray" />
+                android:id="@+id/tv_setting"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/title_margin_right"
+                android:text="设置"
+                android:textSize="16sp" />
 
         </RelativeLayout>
 
 
-    </RelativeLayout>
+        <fu.mr.expressmylove.view.WaterDropListView
+            android:id="@+id/listview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </fu.mr.expressmylove.view.WaterDropListView>
+
+    </LinearLayout>
 
 </FrameLayout>

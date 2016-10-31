@@ -3,7 +3,6 @@ package fu.mr.expressmylove.activity;
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
-import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -23,22 +22,24 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.tencent.connect.UserInfo;
+import com.tencent.connect.auth.QQToken;
+import com.tencent.tauth.IUiListener;
+import com.tencent.tauth.Tencent;
+import com.tencent.tauth.UiError;
 import com.wevey.selector.dialog.DialogOnClickListener;
 import com.wevey.selector.dialog.NormalAlertDialog;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
-
-import java.util.Map;
 
 import fu.mr.expressmylove.R;
 import fu.mr.expressmylove.application.MyApplication;
 import fu.mr.expressmylove.utils.Constans;
 import fu.mr.expressmylove.view.CustomProgressDialog;
-
-import static fu.mr.expressmylove.R.mipmap.phone;
-import static org.xutils.x.http;
 
 public class LoginActivity extends Activity implements View.OnClickListener, TextWatcher {
 
@@ -54,6 +55,7 @@ public class LoginActivity extends Activity implements View.OnClickListener, Tex
     private TextView tv_forgetPassword;
     private ImageView iv_loginLogo;
     private Button btn_logindo;
+    private ImageView iv_qq;
     private RelativeLayout rl_layout;
 
     private CustomProgressDialog progressDialog;
@@ -76,6 +78,11 @@ public class LoginActivity extends Activity implements View.OnClickListener, Tex
     private int height;
     private int count = 0;
 
+    private Tencent mTencent;
+    private QQLogInListener mQQListener;
+    private String openid;
+    private String nickname;
+    private String avatarUrl;
 
 
     @Override
@@ -93,7 +100,9 @@ public class LoginActivity extends Activity implements View.OnClickListener, Tex
             switch (msg.what) {
                 case PROGRESSDIALOG_DISMISS_CODE:
                     //取消请求
-                    cancelable.cancel();
+                    if (cancelable != null) {
+                        cancelable.cancel();
+                    }
                     break;
             }
         }
@@ -113,6 +122,7 @@ public class LoginActivity extends Activity implements View.OnClickListener, Tex
         iv_delete2 = (ImageView) findViewById(R.id.iv_delete2);
         tv_forgetPassword = (TextView) findViewById(R.id.tv_forgetPassword);
         btn_logindo = (Button) findViewById(R.id.btn_logindo);
+        iv_qq = (ImageView) findViewById(R.id.iv_qq);
     }
 
     private void initListener() {
@@ -129,11 +139,14 @@ public class LoginActivity extends Activity implements View.OnClickListener, Tex
         btn_logindo.setClickable(false);
         et_phone.addTextChangedListener(this);
         et_password.addTextChangedListener(this);
+        iv_qq.setOnClickListener(this);
     }
 
     private void initData() {
         application = (MyApplication) getApplication();
         application.addActivity(this);
+        mTencent = Tencent.createInstance(Constans.APP_ID_QQ, getApplicationContext());
+        mQQListener = new QQLogInListener();
     }
 
     @Override
@@ -152,12 +165,12 @@ public class LoginActivity extends Activity implements View.OnClickListener, Tex
                 if (pwdIsShow) {
                     //隐藏密码
                     et_password.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                    et_password.setSelection(et_password.getText().length());
+                    et_password.setSelection(et_password.getText().length());  //设置editText的光标位置为最后
                     iv_lookpassword.setImageResource(R.mipmap.eye2);
                 } else {
                     //显示密码
                     et_password.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
-                    et_password.setSelection(et_password.getText().length());
+                    et_password.setSelection(et_password.getText().length());//设置editText的光标位置为最后
                     iv_lookpassword.setImageResource(R.mipmap.eye1);
                 }
                 pwdIsShow = !pwdIsShow;
@@ -166,7 +179,7 @@ public class LoginActivity extends Activity implements View.OnClickListener, Tex
                 et_password.setText("");
                 break;
             case R.id.tv_forgetPassword:
-                startActivity(new Intent(this,ForgetPasswordActivity.class));
+                startActivity(new Intent(this, ForgetPasswordActivity.class));
                 break;
             case R.id.btn_logindo:
                 phone = et_phone.getText().toString().trim();
@@ -175,7 +188,12 @@ public class LoginActivity extends Activity implements View.OnClickListener, Tex
                 } else {
                     Toast.makeText(LoginActivity.this, "请输入正确的手机号", Toast.LENGTH_SHORT).show();
                 }
-
+                break;
+            case R.id.iv_qq:
+                if (!mTencent.isSessionValid()) {
+                    showProgressBar();
+                    mTencent.login(LoginActivity.this, "get_simple_userinfo", mQQListener);
+                }
                 break;
         }
     }
@@ -195,14 +213,14 @@ public class LoginActivity extends Activity implements View.OnClickListener, Tex
                 progressDialog.dismiss();
                 if (result.equals("0")) {
                     Toast.makeText(LoginActivity.this, "失败", Toast.LENGTH_SHORT).show();
-                } else if (result.equals("-1")) {
+                } else if (result.equals("-1")) { //还没注册呢
                     showNoRegisterDialog();
                 } else if (result.equals("password error")) {
                     Toast.makeText(LoginActivity.this, "密码错误，请重新输入", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(LoginActivity.this, "成功", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                    intent.putExtra("uid",result);
+                    intent.putExtra("uid", result);
                     startActivity(intent);
                     application.deleteActivityList();   //把前面的activity全finsh掉
                 }
@@ -228,7 +246,7 @@ public class LoginActivity extends Activity implements View.OnClickListener, Tex
     /**
      * 显示该手机号未注册的dialog
      */
-    private void showNoRegisterDialog(){
+    private void showNoRegisterDialog() {
         dialog = new NormalAlertDialog.Builder(LoginActivity.this)
                 .setHeight(0.23f)  //屏幕高度*0.23
                 .setWidth(0.65f)  //屏幕宽度*0.65
@@ -449,5 +467,131 @@ public class LoginActivity extends Activity implements View.OnClickListener, Tex
                 && et_password.getText().length() >= 6);
         btn_logindo.setClickable(et_phone.getText().length() == 11
                 && et_password.getText().length() >= 6);
+    }
+
+    /**
+     * QQ授权回调的实现类
+     */
+    private class QQLogInListener implements IUiListener {
+
+        @Override
+        public void onComplete(Object o) {
+            progressDialog.dismiss();
+            Toast.makeText(LoginActivity.this, "授权成功", Toast.LENGTH_SHORT).show();
+            final JSONObject jsonObject = (JSONObject) o;
+            try {
+                openid = jsonObject.getString("openid");  //唯一识别码 注册需要
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            //这里判断如何数据库中有这个openid就不需要注册了，就直接登录
+            RequestParams params = new RequestParams(Constans.URL_CHECK_OPEN_ID);
+            params.addBodyParameter("qq_open_id", openid);
+            x.http().post(params, new Callback.CommonCallback<String>() {
+                @Override
+                public void onSuccess(String result) {
+                    if (result.equals("0")) {
+                        //该QQ没有注册过,就去注册
+                        initOpenidAndToken(jsonObject);
+                        getUserInfo();
+                    } else {
+                        //注册过，就获取到uid,然后直接进入主页
+                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                        intent.putExtra("uid", result);
+                        startActivity(intent);
+                        application.deleteActivityList();   //把前面的activity全finsh掉
+                    }
+                }
+
+                @Override
+                public void onError(Throwable ex, boolean isOnCallback) {
+
+                }
+
+                @Override
+                public void onCancelled(CancelledException cex) {
+
+                }
+
+                @Override
+                public void onFinished() {
+
+                }
+            });
+
+        }
+
+        @Override
+        public void onError(UiError uiError) {
+            progressDialog.dismiss();
+            Toast.makeText(LoginActivity.this, "授权出错", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onCancel() {
+            progressDialog.dismiss();
+            Toast.makeText(LoginActivity.this, "授权取消", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    //设置Openid和Token
+    private void initOpenidAndToken(JSONObject jsonObject) {
+        try {
+            String token = jsonObject.getString("access_token");
+            String expires = jsonObject.getString("expires_in");
+
+            mTencent.setAccessToken(token, expires);
+            mTencent.setOpenId(openid);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void getUserInfo() {
+        //sdk给我们提供了一个类UserInfo，这个类中封装了QQ用户的一些信息，我么可以通过这个类拿到这些信息
+        QQToken mQQToken = mTencent.getQQToken();
+        UserInfo userInfo = new UserInfo(LoginActivity.this, mQQToken);
+        userInfo.getUserInfo(new IUiListener() {
+            @Override
+            public void onComplete(Object o) {
+                JSONObject userInfoJson = (JSONObject) o;
+                System.out.println(o.toString());
+                try {
+                    //获得QQ昵称
+                    nickname = userInfoJson.getString("nickname");
+                    //获得QQ头像URL
+                    avatarUrl = userInfoJson.getString("figureurl_qq_2");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                Intent intent = new Intent(LoginActivity.this, OtherLoginInputInfoActivity.class);
+                intent.putExtra("openid", openid);
+                intent.putExtra("nickname", nickname);
+                intent.putExtra("avatarUrl", avatarUrl);
+                startActivity(intent);
+            }
+
+            @Override
+            public void onError(UiError uiError) {
+                Log.e("GET_QQ_INFO_ERROR", "获取qq用户信息错误");
+                Toast.makeText(LoginActivity.this, "获取qq用户信息错误", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onCancel() {
+                Log.e("GET_QQ_INFO_CANCEL", "获取qq用户信息取消");
+                Toast.makeText(LoginActivity.this, "获取qq用户信息取消", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+
+    //确保能接收到回调
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Tencent.onActivityResultData(requestCode, resultCode, data, mQQListener);
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

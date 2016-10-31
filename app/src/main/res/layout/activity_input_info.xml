@@ -56,7 +56,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="35dp"
         android:clickable="true"
-        android:src="@mipmap/tx"
+        android:src="@mipmap/avatar"
         app:frame_width="3dp"
         app:shape_mode="circle" />
 

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--可以让右边没有边框-->
+
+    <item android:right="-2dp">
+        <shape>
+
+
+            <!-- 圆角 -->
+            <corners
+                android:bottomRightRadius="0dp"
+                android:radius="20dp"
+                android:topRightRadius="0dp" /><!-- 设置圆角半径 -->
+
+            <!-- 大小 -->
+            <size
+                android:width="150dp"
+                android:height="40dp" /><!-- 宽度和高度 -->
+
+            <!--边框-->
+            <stroke
+                android:width="1dp"
+                android:color="#88000000" />
+
+            <!-- 填充 -->
+            <solid android:color="@android:color/white" /><!-- 填充的颜色 -->
+        </shape>
+    </item>
+
+</layer-list>

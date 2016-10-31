@@ -1,1 +1,1 @@
-include ':app', ':selectordialog', ':photogallery'
+include ':app', ':selectordialog', ':photogallery', ':sample', ':library'

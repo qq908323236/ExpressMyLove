@@ -4,10 +4,50 @@
     android:layout_height="match_parent"
     tools:context="fu.mr.expressmylove.fragment.MsgFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="消息" />
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/rl_title"
+            android:layout_width="match_parent"
+            android:layout_height="60dp">
+
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="个人中心"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tv_register"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/title_margin_right"
+                android:text="设置"
+                android:textSize="16sp" />
+
+        </RelativeLayout>
+
+
+        <fu.mr.expressmylove.view.CustomListView
+            android:id="@+id/listview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </fu.mr.expressmylove.view.CustomListView>
+
+    </LinearLayout>
+
+
+
+
+
 
 </FrameLayout>
