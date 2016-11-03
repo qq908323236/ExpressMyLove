@@ -6,38 +6,79 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <RelativeLayout
-            android:id="@+id/rl_title"
+            android:id="@+id/tabhost"
             android:layout_width="match_parent"
-            android:layout_height="60dp">
-
-            <ImageView
-                android:id="@+id/iv_back"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:padding="20dp"
-                android:layout_centerVertical="true"
-                android:src="@mipmap/close" />
+            android:layout_height="60dp"
+            android:layout_alignParentTop="true">
 
             <TextView
-                android:id="@+id/tv_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="表白墙"
-                android:textSize="18sp" />
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:text="发帖"/>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="200dp"
+                android:layout_centerHorizontal="true">
 
-            <!--这个也可弄成线-->
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textSize="17sp"
+                    android:text="最近"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textSize="17sp"
+                    android:text="本周"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textSize="17sp"
+                    android:text="本月"/>
+
+            </LinearLayout>
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:layout_alignParentBottom="true"
-                android:background="@color/gray" />
+                android:background="@color/line2" />
 
         </RelativeLayout>
+        
+        <com.viewpagerindicator.UnderlinePageIndicator
+            android:id="@+id/indicator"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="200dp"
+            android:layout_below="@id/tabhost"
+            android:layout_marginTop="-1dp"
+            android:layout_gravity="center"/>
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/tabhost">
+
+        </android.support.v4.view.ViewPager>
 
     </RelativeLayout>
 

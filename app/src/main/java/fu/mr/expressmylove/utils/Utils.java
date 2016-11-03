@@ -1,12 +1,16 @@
 package fu.mr.expressmylove.utils;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -14,6 +18,9 @@ import android.widget.ImageView;
 import org.xutils.common.util.DensityUtil;
 import org.xutils.image.ImageOptions;
 
+import java.net.URL;
+
+import fu.mr.expressmylove.activity.bigImage.BigImageActivity;
 import fu.mr.expressmylove.view.CustomProgressDialog;
 
 /**
@@ -121,4 +128,16 @@ public class Utils {
             //设置显示圆形图片
             .setCircular(true)
             .build();
+
+    /**
+     * 查看大图
+     */
+    public static void SeeBigImage(View view, Activity activity, String url){
+        ActivityOptionsCompat compat = ActivityOptionsCompat.makeScaleUpAnimation(view,
+                view.getWidth() / 2, view.getHeight() / 2, 0, 0);
+        Intent intent = new Intent(activity, BigImageActivity.class);
+        intent.putExtra("url", url);
+        ActivityCompat.startActivity(activity, intent,
+                compat.toBundle());
+    }
 }

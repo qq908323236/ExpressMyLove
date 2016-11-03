@@ -33,15 +33,15 @@
                 android:text="设置"
                 android:textSize="16sp" />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/line2" />
+
         </RelativeLayout>
 
 
-        <fu.mr.expressmylove.view.CustomListView
-            android:id="@+id/listview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-        </fu.mr.expressmylove.view.CustomListView>
 
     </LinearLayout>
 

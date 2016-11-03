@@ -92,11 +92,14 @@
         <activity
             android:name=".activity.editAccountInfo.AlterNicknameActivity"
             android:windowSoftInputMode="stateVisible|adjustResize" />
-        <!--修改性别-->
+        <!-- 修改性别 -->
         <activity android:name=".activity.editAccountInfo.AlterSexActivity" />
-        <!--修改个性签名-->
-        <activity android:name=".activity.editAccountInfo.AlterPersonalizeActivity"
-            android:windowSoftInputMode="stateVisible|adjustResize"/>
+        <!-- 修改个性签名 -->
+        <activity
+            android:name=".activity.editAccountInfo.AlterPersonalizeActivity"
+            android:windowSoftInputMode="stateVisible|adjustResize" />
+        <activity android:name=".activity.bigImage.BigImageActivity"
+            android:theme="@style/FullScreenTheme"></activity>
     </application>
 
 </manifest>

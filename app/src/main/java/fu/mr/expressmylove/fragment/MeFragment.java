@@ -16,6 +16,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -29,6 +30,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import fu.mr.expressmylove.R;
+import fu.mr.expressmylove.activity.bigImage.BigImageActivity;
 import fu.mr.expressmylove.activity.editAccountInfo.EditAccountInfoActivity;
 import fu.mr.expressmylove.activity.setting.SettingActivity;
 import fu.mr.expressmylove.application.MyApplication;
@@ -64,9 +66,7 @@ public class MeFragment extends Fragment implements WaterDropListView.IWaterDrop
     private int firstVisiblePositionTop; // listView第一可见的item距离父布局的top
     private int dividerHeight;
 
-
     private static final int REQUEST_CODE_EDIT_INFO = 10;
-
 
     public MeFragment() {
         // Required empty public constructor
@@ -199,6 +199,14 @@ public class MeFragment extends Fragment implements WaterDropListView.IWaterDrop
 
     private void initListener() {
         listview.setWaterDropListViewListener(this);
+
+        iv_avatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Utils.SeeBigImage(iv_avatar, getActivity(), Constans.URL_BASE + user.getAvatar());
+            }
+        });
+
         //设置
         tv_setting.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -217,7 +225,6 @@ public class MeFragment extends Fragment implements WaterDropListView.IWaterDrop
     }
 
     private void initData() {
-
 
     }
 
@@ -258,7 +265,7 @@ public class MeFragment extends Fragment implements WaterDropListView.IWaterDrop
             if (sex) {
                 showSexImage(user.getSex());
             }
-            if (personalize){
+            if (personalize) {
                 tv_personalize.setText(user.getPersonalize());
             }
         }
@@ -325,7 +332,8 @@ public class MeFragment extends Fragment implements WaterDropListView.IWaterDrop
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-
+                Toast.makeText(application, "服务器连接失败，请检查网络连接", Toast.LENGTH_SHORT).show();
+                listview.stopRefresh();
             }
 
             @Override
