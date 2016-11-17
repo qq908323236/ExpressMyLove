@@ -64,8 +64,8 @@ public class MeFragment extends Fragment implements WaterDropListView.IWaterDrop
 
     private int firstVisiblePosition; // listView第一个可见的item的位置，即在数据集合中的位置position
     private int firstVisiblePositionTop; // listView第一可见的item距离父布局的top
-    private int dividerHeight;
 
+    private int dividerHeight;
     private static final int REQUEST_CODE_EDIT_INFO = 10;
 
     public MeFragment() {
@@ -200,9 +200,11 @@ public class MeFragment extends Fragment implements WaterDropListView.IWaterDrop
     private void initListener() {
         listview.setWaterDropListViewListener(this);
 
+        //查看头像大图
         iv_avatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Utils.SeeBigImage(iv_avatar, getActivity(), Constans.URL_BASE + user.getAvatar());
             }
         });

@@ -123,8 +123,8 @@ public class Utils {
             .setImageScaleType(ImageView.ScaleType.CENTER_CROP)
             //设置使用缓存
             .setUseMemCache(true)
-            //设置支持gif
-            .setIgnoreGif(false)
+            //设置不支持gif
+            .setIgnoreGif(true)
             //设置显示圆形图片
             .setCircular(true)
             .build();

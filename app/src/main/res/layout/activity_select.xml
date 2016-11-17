@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:src="@mipmap/guide_4" />
+        android:src="@mipmap/g7" />
 
 
     <ImageView
@@ -20,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:src="@mipmap/guide_3" />
+        android:src="@mipmap/g2" />
 
 
     <ImageView
@@ -28,7 +28,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:src="@mipmap/guide_2" />
+        android:src="@mipmap/g4" />
 
 
     <ImageView
@@ -36,7 +36,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:src="@mipmap/guide_1" />
+        android:src="@mipmap/g8" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -50,10 +50,10 @@
         <Button
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
             android:layout_weight="1"
             android:background="@drawable/btn_login"
             android:onClick="login"
-            android:layout_marginRight="10dp"
             android:text="登陆"
             android:textColor="@android:color/white"
             android:textSize="15sp" />
@@ -61,10 +61,10 @@
         <Button
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
             android:layout_weight="1"
             android:background="@drawable/btn_register"
             android:onClick="register"
-            android:layout_marginLeft="10dp"
             android:text="注册"
             android:textColor="@color/colorTabNomar"
             android:textSize="15sp" />

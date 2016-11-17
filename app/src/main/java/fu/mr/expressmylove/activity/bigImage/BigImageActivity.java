@@ -22,6 +22,7 @@ public class BigImageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_big_image);
         iv_image = (ImageView) findViewById(R.id.iv_image);
+
         x.image().bind(iv_image, getIntent().getStringExtra("url"), new Callback.ProgressCallback<Drawable>() {
             @Override
             public void onWaiting() {
