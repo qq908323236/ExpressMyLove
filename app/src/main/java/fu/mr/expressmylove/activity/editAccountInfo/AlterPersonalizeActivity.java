@@ -27,9 +27,6 @@ import fu.mr.expressmylove.utils.SharedPreferencesUtils;
 import fu.mr.expressmylove.utils.Utils;
 import fu.mr.expressmylove.view.CustomProgressDialog;
 
-import static fu.mr.expressmylove.R.id.et_nickName;
-import static fu.mr.expressmylove.R.mipmap.nickname;
-
 public class AlterPersonalizeActivity extends AppCompatActivity implements View.OnClickListener,TextWatcher{
 
     private ImageView iv_back;
@@ -47,7 +44,7 @@ public class AlterPersonalizeActivity extends AppCompatActivity implements View.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initUi();
+        initUI();
         initListener();
         initData();
 
@@ -67,7 +64,7 @@ public class AlterPersonalizeActivity extends AppCompatActivity implements View.
         }
     };
 
-    private void initUi() {
+    private void initUI() {
         setContentView(R.layout.activity_alter_personalize);
         iv_back = (ImageView) findViewById(R.id.iv_back);
         tv_save = (TextView) findViewById(R.id.tv_save);

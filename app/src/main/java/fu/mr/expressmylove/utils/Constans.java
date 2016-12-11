@@ -19,14 +19,16 @@ public class Constans {
      */
     public static final String APP_ID_QQ = "1105629001";
 
+
     /**
      * 服务器接口
      */
     //本地服务器接口的基础地址
-    public static final String URL_BASE = "http://10.5.86.41/expressmylove/";
+    public static final String URL_BASE = "http://27.219.204.112/expressmylove/";
+
 
     //远程服务器接口基础地址
-//    public static final String URL_BASE = "http://123.206.42.197/expressmylove/";
+//    public static final String URL_BASE = "http://123.206.42.197/ expressmylove/";
 
     //用户登陆接口
     public static final String URL_LOGIN = URL_BASE + "user/login.php";
@@ -58,7 +60,6 @@ public class Constans {
     public static final String UPDATE_USER_INFO_WHAT_PERSONALIZE = "4";  //修改个性签名
 
 
-
     /**
      * 通过WHAT常量来判断为什么要手机发送验证码
      */
@@ -67,7 +68,7 @@ public class Constans {
     public static final String WHAT_FORGETPASSWORD = "FORGETPASSWORD";
 
     /**
-     *  通过WHAT_WEB常量来判断WEB界面打开什么网址
+     * 通过WHAT_WEB常量来判断WEB界面打开什么网址
      */
     public static final String WHAT_WEB_SERVICE_AGREEMENT = "SERVICE_AGREEMENT";
 }

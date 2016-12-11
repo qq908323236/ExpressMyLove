@@ -2,6 +2,7 @@ package fu.mr.expressmylove.fragment;
 
 
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -21,10 +22,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fu.mr.expressmylove.R;
+import fu.mr.expressmylove.activity.post.PostActivity;
 import fu.mr.expressmylove.adapter.BbqListViewAdapter;
 import fu.mr.expressmylove.view.WaterDropListView;
 
 import static fu.mr.expressmylove.R.id.listview;
+import static fu.mr.expressmylove.R.id.start;
 
 public class BbqFragment extends Fragment {
 
@@ -124,6 +127,8 @@ public class BbqFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getActivity(), "点击了，发帖", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getActivity(), PostActivity.class);
+                startActivity(intent);
             }
         });
 
